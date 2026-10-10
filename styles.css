@@ -1,0 +1,271 @@
+/* Variables de color y fuentes Y2K */
+:root {
+  --pink-light: #ffd6e0;
+  --pink-main: #ff85a1;
+  --pink-dark: #ff2a85;
+  --lavender: #e7c6ff;
+  --baby-blue: #bbd0ff;
+  --white-glass: rgba(255, 255, 255, 0.65);
+  --font-title: 'Cherry Swash', cursive;
+  --font-body: 'Poppins', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: linear-gradient(135deg, var(--pink-light), var(--lavender), var(--baby-blue));
+  min-height: 100vh;
+  font-family: var(--font-body);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Fondo con corazones animados */
+.hearts-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.floating-heart {
+  position: absolute;
+  color: rgba(255, 133, 161, 0.4);
+  font-size: 20px;
+  animation: floatUp 6s linear infinite;
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(100vh) scale(0.8); opacity: 1; }
+  100% { transform: translateY(-10vh) scale(1.3); opacity: 0; }
+}
+
+/* Ventana estilo Y2K / Glassmorphism */
+.y2k-window {
+  position: relative;
+  z-index: 10;
+  width: 90%;
+  max-width: 520px;
+  background: var(--white-glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  border-radius: 18px;
+  box-shadow: 0 15px 35px rgba(255, 42, 133, 0.2), 
+              inset 0 0 15px rgba(255, 255, 255, 0.6);
+  overflow: hidden;
+}
+
+/* Header de ventana */
+.window-header {
+  background: linear-gradient(90deg, var(--pink-main), var(--pink-dark));
+  padding: 10px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+}
+
+.window-title {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.window-controls {
+  display: flex;
+  gap: 6px;
+}
+
+.win-btn {
+  background: rgba(255, 255, 255, 0.3);
+  border: none;
+  color: white;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.win-btn:hover {
+  background: white;
+  color: var(--pink-dark);
+}
+
+/* Cuerpo de la ventana */
+.window-body {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Reproductor de Música Y2K */
+.player-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: rgba(255, 255, 255, 0.5);
+  padding: 16px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+.album-cover {
+  width: 75px;
+  height: 75px;
+  background: var(--pink-main);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  animation: spin 8s linear infinite paused;
+}
+
+.album-cover.playing {
+  animation-play-state: running;
+}
+
+@keyframes spin {
+  100% { transform: rotate(360deg); }
+}
+
+.vinyl-disc {
+  width: 25px;
+  height: 25px;
+  background: #ffffff;
+  border-radius: 50%;
+}
+
+.sparkle {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  font-size: 1.2rem;
+  color: #fff;
+}
+
+.player-info {
+  flex: 1;
+}
+
+.song-title {
+  font-family: var(--font-title);
+  color: var(--pink-dark);
+  font-size: 1.1rem;
+}
+
+.artist-name {
+  font-size: 0.8rem;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 6px;
+  background: #ffd6e0;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.progress-fill {
+  width: 45%;
+  height: 100%;
+  background: var(--pink-dark);
+}
+
+.player-controls {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.player-controls button {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  color: var(--pink-dark);
+  cursor: pointer;
+}
+
+.main-play {
+  background: var(--pink-main) !important;
+  color: white !important;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Sección Nota de Amor */
+.love-note {
+  background: rgba(255, 255, 255, 0.7);
+  padding: 18px;
+  border-radius: 14px;
+  text-align: center;
+  border: 1px dashed var(--pink-main);
+}
+
+.love-note h3 {
+  font-family: var(--font-title);
+  color: var(--pink-dark);
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+}
+
+.note-text {
+  font-size: 0.92rem;
+  color: #444;
+  min-height: 48px;
+  margin-bottom: 12px;
+}
+
+/* Botón estilo Y2K */
+.y2k-button {
+  background: linear-gradient(180deg, var(--pink-main), var(--pink-dark));
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(255, 42, 133, 0.3);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.y2k-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(255, 42, 133, 0.4);
+}
+
+/* Footer de ventana */
+.window-footer {
+  background: rgba(255, 255, 255, 0.4);
+  padding: 8px 16px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.72rem;
+  color: #777;
+  border-top: 1px solid rgba(255, 255, 255, 0.6);
+}
