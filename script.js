@@ -1,4 +1,3 @@
-// Frases sobrias y sinceras
 const romanticNotes = [
   "A veces las palabras faltan, por eso preparé este espacio...",
   "Hay cosas que solo cobran sentido cuando se escuchan con calma.",
@@ -10,7 +9,6 @@ let noteIndex = 0;
 const typedTextElement = document.getElementById("typed-text");
 const nextNoteBtn = document.getElementById("next-note-btn");
 
-// Elementos de Audio
 const audio = document.getElementById("main-audio");
 const playBtn = document.getElementById("play-btn");
 const playIcon = document.getElementById("play-icon");
@@ -21,7 +19,6 @@ const currentTimeEl = document.getElementById("current-time");
 const durationEl = document.getElementById("duration");
 const vinyl = document.getElementById("vinyl");
 
-// Animación de texto
 function typeWriter(text, i = 0) {
   if (i === 0) typedTextElement.textContent = "";
   if (i < text.length) {
@@ -35,7 +32,6 @@ nextNoteBtn.addEventListener("click", () => {
   typeWriter(romanticNotes[noteIndex]);
 });
 
-// Control de Reproducción de Audio
 playBtn.addEventListener("click", () => {
   if (audio.paused) {
     audio.play();
@@ -56,19 +52,16 @@ audio.addEventListener("pause", () => {
   vinyl.classList.remove("playing");
 });
 
-// Formatear segundos a minutos:segundos (e.g. 1:45)
 function formatTime(seconds) {
   const min = Math.floor(seconds / 60);
   const sec = Math.floor(seconds % 60);
   return `${min}:${sec < 10 ? '0' : ''}${sec}`;
 }
 
-// Cargar duración del audio cuando esté listo
 audio.addEventListener("loadedmetadata", () => {
   durationEl.textContent = formatTime(audio.duration);
 });
 
-// Actualizar barra de progreso y tiempo
 audio.addEventListener("timeupdate", () => {
   if (audio.duration) {
     const progressPercent = (audio.currentTime / audio.duration) * 100;
@@ -77,7 +70,6 @@ audio.addEventListener("timeupdate", () => {
   }
 });
 
-// Adelantar/Retroceder audio al hacer clic en la barra
 progressContainer.addEventListener("click", (e) => {
   const width = progressContainer.clientWidth;
   const clickX = e.offsetX;
@@ -87,7 +79,6 @@ progressContainer.addEventListener("click", (e) => {
   }
 });
 
-// Generar fondo de destellos sutiles
 function createStars() {
   const container = document.getElementById("stars-bg");
   for (let i = 0; i < 25; i++) {
