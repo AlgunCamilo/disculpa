@@ -1,2 +1,3 @@
 # disculpa
 Repo_personal
+.
