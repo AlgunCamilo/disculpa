@@ -1,61 +1,109 @@
-// Frases románticas estilo Y2K
-const loveNotes = [
-  "Eres mi canción favorita de los 2000s ♡",
-  "Nuestra conexión es más fuerte que el Wi-Fi ✨",
-  "Guardado en mi corazón como un archivo importante 💾",
-  "Tú + Yo = La playlist perfecta 🎧",
-  "Eres el destello de brillo que le faltaba a mi día ✧"
+// Frases sobrias y sinceras
+const romanticNotes = [
+  "A veces las palabras faltan, por eso preparé este espacio...",
+  "Hay cosas que solo cobran sentido cuando se escuchan con calma.",
+  "Gracias por tomarte el tiempo de escuchar esto.",
+  "Un pequeño detalle pensado sinceramente para ti."
 ];
 
-let currentNoteIndex = 0;
+let noteIndex = 0;
 const typedTextElement = document.getElementById("typed-text");
-const newNoteBtn = document.getElementById("new-note-btn");
-const playBtn = document.getElementById("play-btn");
-const albumCover = document.querySelector(".album-cover");
-let isPlaying = false;
+const nextNoteBtn = document.getElementById("next-note-btn");
 
-// Efecto de máquina de escribir
+// Elementos de Audio
+const audio = document.getElementById("main-audio");
+const playBtn = document.getElementById("play-btn");
+const playIcon = document.getElementById("play-icon");
+const pauseIcon = document.getElementById("pause-icon");
+const progressBar = document.getElementById("progress-bar");
+const progressContainer = document.getElementById("progress-container");
+const currentTimeEl = document.getElementById("current-time");
+const durationEl = document.getElementById("duration");
+const vinyl = document.getElementById("vinyl");
+
+// Animación de texto
 function typeWriter(text, i = 0) {
   if (i === 0) typedTextElement.textContent = "";
   if (i < text.length) {
     typedTextElement.textContent += text.charAt(i);
-    setTimeout(() => typeWriter(text, i + 1), 35);
+    setTimeout(() => typeWriter(text, i + 1), 30);
   }
 }
 
-// Cambiar nota de amor
-newNoteBtn.addEventListener("click", () => {
-  currentNoteIndex = (currentNoteIndex + 1) % loveNotes.length;
-  typeWriter(loveNotes[currentNoteIndex]);
+nextNoteBtn.addEventListener("click", () => {
+  noteIndex = (noteIndex + 1) % romanticNotes.length;
+  typeWriter(romanticNotes[noteIndex]);
 });
 
-// Control básico del reproductor
+// Control de Reproducción de Audio
 playBtn.addEventListener("click", () => {
-  isPlaying = !isPlaying;
-  playBtn.textContent = isPlaying ? "⏸" : "▶";
-  if (isPlaying) {
-    albumCover.classList.add("playing");
+  if (audio.paused) {
+    audio.play();
   } else {
-    albumCover.classList.remove("playing");
+    audio.pause();
   }
 });
 
-// Generador de corazones flotantes en el fondo
-function createFloatingHearts() {
-  const container = document.getElementById("hearts-bg");
-  for (let i = 0; i < 15; i++) {
-    const heart = document.createElement("div");
-    heart.classList.add("floating-heart");
-    heart.innerHTML = "♡";
-    heart.style.left = Math.random() * 100 + "vw";
-    heart.style.animationDuration = Math.random() * 3 + 4 + "s";
-    heart.style.fontSize = Math.random() * 15 + 15 + "px";
-    container.appendChild(heart);
+audio.addEventListener("play", () => {
+  playIcon.style.display = "none";
+  pauseIcon.style.display = "block";
+  vinyl.classList.add("playing");
+});
+
+audio.addEventListener("pause", () => {
+  playIcon.style.display = "block";
+  pauseIcon.style.display = "none";
+  vinyl.classList.remove("playing");
+});
+
+// Formatear segundos a minutos:segundos (e.g. 1:45)
+function formatTime(seconds) {
+  const min = Math.floor(seconds / 60);
+  const sec = Math.floor(seconds % 60);
+  return `${min}:${sec < 10 ? '0' : ''}${sec}`;
+}
+
+// Cargar duración del audio cuando esté listo
+audio.addEventListener("loadedmetadata", () => {
+  durationEl.textContent = formatTime(audio.duration);
+});
+
+// Actualizar barra de progreso y tiempo
+audio.addEventListener("timeupdate", () => {
+  if (audio.duration) {
+    const progressPercent = (audio.currentTime / audio.duration) * 100;
+    progressBar.style.width = `${progressPercent}%`;
+    currentTimeEl.textContent = formatTime(audio.currentTime);
+  }
+});
+
+// Adelantar/Retroceder audio al hacer clic en la barra
+progressContainer.addEventListener("click", (e) => {
+  const width = progressContainer.clientWidth;
+  const clickX = e.offsetX;
+  const duration = audio.duration;
+  if (duration) {
+    audio.currentTime = (clickX / width) * duration;
+  }
+});
+
+// Generar fondo de destellos sutiles
+function createStars() {
+  const container = document.getElementById("stars-bg");
+  for (let i = 0; i < 25; i++) {
+    const star = document.createElement("div");
+    star.classList.add("star");
+    star.style.left = Math.random() * 100 + "vw";
+    star.style.top = Math.random() * 100 + "vh";
+    const size = Math.random() * 3 + 1;
+    star.style.width = size + "px";
+    star.style.height = size + "px";
+    star.style.animationDelay = Math.random() * 4 + "s";
+    container.appendChild(star);
   }
 }
 
-// Inicialización
 document.addEventListener("DOMContentLoaded", () => {
-  typeWriter(loveNotes[0]);
-  createFloatingHearts();
+  typeWriter(romanticNotes[0]);
+  createStars();
 });
